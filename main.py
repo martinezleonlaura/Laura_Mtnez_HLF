@@ -3,6 +3,7 @@ from clases import *
 from funciones import *
 import random
 import pprint
+import time
 
 def jugar():
 #Muestra el menú inicial def en la fn "iniciar_juego" uy procesa la opción elegida
@@ -25,6 +26,7 @@ def jugar():
 
     print(f"Barcos colocados de manera aleatoria. ¡¡¡comienza la partida!!! GOOD LUCK!!!")
     tablero_humano.mostrar_tablero()
+    time.sleep(2)
 
 #Comienza la partida. COMIENZA EL USUARIO!!!
     while True: 
@@ -32,6 +34,7 @@ def jugar():
         
         while turno_jugador:
             print()
+            time.sleep(2)
             print(f"Tu registro de disparos:")
             tablero_maquina.mostrar_tablero(solo_disparos=True)
 
@@ -55,6 +58,7 @@ def jugar():
 
                 case "AGUA":
                     print(f"¡¡¡AGUA!!! Pierdes tu turno...")
+                    print()
                     turno_jugador = False
 
                 case "REPETIR":
@@ -66,9 +70,11 @@ def jugar():
                     continue        #Bucle while, salta arriba y vuelve a empezar
 
     #Turno de la MÁQUINA
+        time.sleep(2)
         turno_maquina = True
 
         while turno_maquina:
+            time.sleep(2)
             print(f"Turno de la máquina.")
 
             x_maquina = random.randint(0, DIMENSION - 1)
@@ -79,6 +85,7 @@ def jugar():
             match disparo_maquina:
                 case "TOCADO":
                     print (f"¡¡¡TOCADO!!! La máquina a tocado uno de tus barcos. Sigue jugando.")
+                    print()
 
                 case "HUNDIDO":
                     print (f"¡¡¡TOCADO y HUNDIDO!!! La máquina ha hundido uno de tus barcos")
@@ -88,6 +95,7 @@ def jugar():
 
                 case "AGUA":
                     print(f"¡¡¡AGUA!!!")
+                    print()
                     turno_maquina = False
 
                 case "REPETIR":
