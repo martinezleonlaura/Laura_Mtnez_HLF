@@ -2,7 +2,6 @@ from variables import *
 from clases import *
 from funciones import *
 import random
-import pprint
 import time
 
 def jugar():
@@ -12,7 +11,7 @@ def jugar():
         return
 
 #Si la opción elegida NO es "SALIR" crea los tableros
-    nombre_usuario = input(f"Introduce tu nombre, corsario. En caso contrario, pulsa enter.    ").upper()
+    nombre_usuario = input(f"Introduce tu nombre, corsari@. En caso contrario, pulsa enter.    ").upper()
     if not nombre_usuario:   
         nombre_usuario = "Usuario"
     
@@ -50,27 +49,23 @@ def jugar():
             match resultado:
                 case "TOCADO":
                     print (f"¡¡¡TOCADO!!! Sigues jugando")
-                    tablero_maquina.mostrar_tablero(True)
+                    #tablero_maquina.mostrar_tablero(True)
 
                 case "HUNDIDO":
                     print (f"¡¡¡TOCADO y HUNDIDO!!!. Has hundido: {barco_afectado}")
-                    tablero_maquina.mostrar_tablero(True)
+                    #tablero_maquina.mostrar_tablero(True)
                     if not tablero_maquina.quedan_barcos():
                         print(f"ZORIONAK!!! Con este, has hundido todos los barcos de tu adversario. YOU WIN!!!")
                         return      #Rompe el bucle while y se acaba la partida
 
                 case "AGUA":
                     print(f"¡¡¡AGUA!!! Pierdes tu turno...\n")
-                    tablero_maquina.mostrar_tablero(True)
+                    #tablero_maquina.mostrar_tablero(True)
                     turno_jugador = False
 
                 case "REPETIR":
                     print(f"Ya habías disparado en esa posición, por favor, elige otra coordenada")
                     continue        #Bucle while, salta arriba y vuelve a empezar        
-
-                case "FIN":
-                    print(f"La coordenada elegida está fuera del tablero.")
-                    continue        #Bucle while, salta arriba y vuelve a empezar
 
     #Turno de la MÁQUINA
         time.sleep(1)
@@ -89,31 +84,23 @@ def jugar():
                 case "TOCADO":
                     print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print (f"¡¡¡TOCADO!!! La máquina a tocado uno de tus barcos. Sigue jugando.")
-                    #tablero_humano.mostrar_tablero(False)
                     print()
 
                 case "HUNDIDO":
                     print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print (f"¡¡¡TOCADO y HUNDIDO!!! La máquina ha hundido uno de tus barcos")
-                    #tablero_humano.mostrar_tablero(False)
                     if not tablero_humano.quedan_barcos():
                         print(f"Con este, la máquina ha hundido todos tus barcos. YOU LOSE!!!")
-                        #tablero_humano.mostrar_tablero(False)
                         return      #Rompe el bucle while y se acaba la partida
 
                 case "AGUA":
                     print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print(f"¡¡¡AGUA!!!")
-                    #tablero_humano.mostrar_tablero(False)
                     print()
                     turno_maquina = False
 
                 case "REPETIR":
-                    continue        #Bucle while, salta arriba y vuelve a empezar        
-
-                case "FIN":
-                    continue        #Bucle while, salta arriba y vuelve a empezar
-
+                    continue
 
 if __name__ == "__main__":
     jugar()

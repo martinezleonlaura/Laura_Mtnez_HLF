@@ -1,7 +1,4 @@
 from variables import *
-import random
-import pprint
-
 
 def iniciar_juego(): 
     ''' 
@@ -11,7 +8,7 @@ def iniciar_juego():
             2.- Y con match/case si el número entero está entre 1 y 3
     '''
     while True:
-        print (f"******BIENVENIDO A HUNDIR LA FLOTA CLASSIC******")
+        print (f"\n******BIENVENIDO A HUNDIR LA FLOTA******")
         try:
             opcion = int(input(f"Elige una opción. 1: Jugar, 2: Mostrar instruciones, 3: salir    "))
         except ValueError:
@@ -21,7 +18,7 @@ def iniciar_juego():
         match opcion:
             case 1:
                 print()
-                print(f"¡¡¡CORSARIO!!! Comienza la batalla...")
+                print(f"¡¡¡CORSARI@!!! Comienza la batalla...")
                 return "JUGAR"
 
             case 2:

@@ -32,14 +32,14 @@ class Tablero:
                 y = random.randint(0, self.dimension - 1)
                 if self.validar_posicion(orientacion, x, y, eslora):
                     self.colocar_barco_en_tablero(orientacion, x, y, eslora)
-                    coordenadas_barco = []     #Guardo las coordenadas del barco para comprobar luego si lo he hundido
+                    lista_coordenadas_barco = []     #Guardo las coordenadas del barco para comprobar luego si lo he hundido
                     if orientacion == "E-O":
                         for i in range (y, y + eslora):
-                            coordenadas_barco.append((x, i))
+                            lista_coordenadas_barco.append((x, i))
                     else:
                         for i in range (x, x + eslora):
-                            coordenadas_barco.append((i, y))
-                    self.coordenadas_barco[nombre] = coordenadas_barco      #Asigno la lista al diccionario
+                            lista_coordenadas_barco.append((i, y))
+                    self.coordenadas_barco[nombre] = lista_coordenadas_barco      #Asigno la lista al diccionario
                     colocado = True
 
 
@@ -50,18 +50,26 @@ class Tablero:
             1.- Primero que no salga del tablero.
             2.- Segundo que no se solape con otros barcos, es decir que la celda está vacía (agua).
         '''
-        if orientacion == "E-O":
+        if orientacion == "E-O":   #Primero comprueba los límites del tablero
             if y + eslora > self.dimension:  
                 return False
-            for i in range(y, y + eslora):      
-                if self.tablero_barcos[x][i] != SIMBOLO_AGUA:
-                    return False
+            rango_x = range(x, x + 1)
+            rango_y = range(y, y + eslora)
+
         else:       #Es decir orientacion == "N-S"
             if x + eslora > self.dimension:
                 return False
-            for i in range (x, x + eslora):
-                if self.tablero_barcos[i][y] != SIMBOLO_AGUA:
-                    return False
+            rango_x = range(x, x + eslora)
+            rango_y = range(y, y + 1)
+
+        for f in rango_x:   #Ahora comprueba la celda y su contorno de 3x3
+            for c in rango_y:
+                for i in range(f - 1, f + 2):
+                    for j in range(c - 1, c + 2):
+                        if 0 <= i < self.dimension and 0 <= j < self.dimension:   #Vuelve a comprobar que i y j están dentro de tablero
+                            if self.tablero_barcos[i][j] == SIMBOLO_BARCO:
+                                return False
+
         return True     #Si supera todos los "filtros"
 
 
@@ -117,6 +125,7 @@ class Tablero:
         
         if self.tablero_barcos[x][y] == SIMBOLO_BARCO:
             self.tablero_disparos[x][y] = SIMBOLO_TOCADO
+            self.tablero_barcos[x][y] = SIMBOLO_TOCADO
             barco_afectado = None
             for barco, coordenadas in self.coordenadas_barco.items():
                 if (x, y) in coordenadas:
