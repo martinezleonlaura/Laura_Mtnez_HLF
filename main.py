@@ -12,7 +12,7 @@ def jugar():
         return
 
 #Si la opción elegida NO es "SALIR" crea los tableros
-    nombre_usuario = input(f"Introduce tu nombre, corsario. En caso contrario, pulsa enter.").upper()
+    nombre_usuario = input(f"Introduce tu nombre, corsario. En caso contrario, pulsa enter.    ").upper()
     if not nombre_usuario:   
         nombre_usuario = "Usuario"
     
@@ -24,19 +24,20 @@ def jugar():
     tablero_humano.colocar_barcos_random()
     tablero_maquina.colocar_barcos_random()
 
-    print(f"Barcos colocados de manera aleatoria. ¡¡¡comienza la partida!!! GOOD LUCK!!!")
-    tablero_humano.mostrar_tablero()
-    time.sleep(2)
+    print(f"\nBarcos colocados de manera aleatoria. ¡¡¡comienza la partida!!! GOOD LUCK!!!")
+    time.sleep(1)
 
 #Comienza la partida. COMIENZA EL USUARIO!!!
     while True: 
         turno_jugador = True  
         
         while turno_jugador:
-            print()
-            time.sleep(2)
-            print(f"Tu registro de disparos:")
-            tablero_maquina.mostrar_tablero(solo_disparos=True)
+            time.sleep(1)
+            print(f"\nTu tablero de barcos {nombre_usuario}:")
+            tablero_humano.mostrar_tablero(False)
+            print(f"\nTu registro de disparos (Aciertos/Fallos contra la máquina):")
+            tablero_maquina.mostrar_tablero(True)
+            
 
             print(f"Tu turno, {nombre_usuario}")
             #Solicita las coordenadas
@@ -49,16 +50,18 @@ def jugar():
             match resultado:
                 case "TOCADO":
                     print (f"¡¡¡TOCADO!!! Sigues jugando")
+                    tablero_maquina.mostrar_tablero(True)
 
                 case "HUNDIDO":
                     print (f"¡¡¡TOCADO y HUNDIDO!!!. Has hundido: {barco_afectado}")
+                    tablero_maquina.mostrar_tablero(True)
                     if not tablero_maquina.quedan_barcos():
                         print(f"ZORIONAK!!! Con este, has hundido todos los barcos de tu adversario. YOU WIN!!!")
                         return      #Rompe el bucle while y se acaba la partida
 
                 case "AGUA":
-                    print(f"¡¡¡AGUA!!! Pierdes tu turno...")
-                    print()
+                    print(f"¡¡¡AGUA!!! Pierdes tu turno...\n")
+                    tablero_maquina.mostrar_tablero(True)
                     turno_jugador = False
 
                 case "REPETIR":
@@ -70,13 +73,13 @@ def jugar():
                     continue        #Bucle while, salta arriba y vuelve a empezar
 
     #Turno de la MÁQUINA
-        time.sleep(2)
+        time.sleep(1)
         turno_maquina = True
+        print(f"\nTurno de la máquina.")
 
         while turno_maquina:
-            time.sleep(2)
-            print(f"Turno de la máquina.")
-
+            
+            #Genera nuevas coordenadas dentro del bucle
             x_maquina = random.randint(0, DIMENSION - 1)
             y_maquina = random.randint(0, DIMENSION - 1)
 
@@ -84,17 +87,24 @@ def jugar():
 
             match disparo_maquina:
                 case "TOCADO":
+                    print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print (f"¡¡¡TOCADO!!! La máquina a tocado uno de tus barcos. Sigue jugando.")
+                    #tablero_humano.mostrar_tablero(False)
                     print()
 
                 case "HUNDIDO":
+                    print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print (f"¡¡¡TOCADO y HUNDIDO!!! La máquina ha hundido uno de tus barcos")
+                    #tablero_humano.mostrar_tablero(False)
                     if not tablero_humano.quedan_barcos():
                         print(f"Con este, la máquina ha hundido todos tus barcos. YOU LOSE!!!")
+                        #tablero_humano.mostrar_tablero(False)
                         return      #Rompe el bucle while y se acaba la partida
 
                 case "AGUA":
+                    print(f"La máquina ha disparado en la posición({x_maquina},{y_maquina})")
                     print(f"¡¡¡AGUA!!!")
+                    #tablero_humano.mostrar_tablero(False)
                     print()
                     turno_maquina = False
 

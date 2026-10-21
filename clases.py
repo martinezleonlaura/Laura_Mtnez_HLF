@@ -81,15 +81,24 @@ class Tablero:
     def mostrar_tablero(self, solo_disparos=False):
         ''' 
         Método para mostrar el tablero de los barcos colocados en pantalla.
+        Mejora 21/10: introducir índices desde cero hasta la dimensión.
         '''
+        
+        cabecera_columnas = "     "+"     ".join([str(i) for i in range(self.dimension)])
+        
         if not solo_disparos:
-            print()
-            print(f"******TABLERO DE BARCOS DE {self.jugador.upper()}******")
-            pprint.pprint(self.tablero_barcos)
+            print(cabecera_columnas)
+            # Iteramos el tablero para imprimir el número de fila antes de cada línea de pprint
+            for i, fila in enumerate(self.tablero_barcos):
+                print(f"{i} ", end="")
+                pprint.pprint(fila)
 
-        print()
-        print(f"*****TABLERO DE DISPAROS*****")
-        pprint.pprint(self.tablero_disparos)
+        else:
+            print(cabecera_columnas)
+            # Hacemos lo mismo para el tablero de disparos
+            for i, fila in enumerate(self.tablero_disparos):
+                print(f"{i} ", end="")
+                pprint.pprint(fila)
 
 
     def disparo_coordenada(self, x: int, y: int):
@@ -122,6 +131,7 @@ class Tablero:
                 return "TOCADO", None
         else:
             self.tablero_disparos[x][y] = SIMBOLO_FALLO
+            self.tablero_barcos[x][y] = SIMBOLO_FALLO
             return "AGUA", None
 
 
@@ -136,17 +146,6 @@ class Tablero:
                 return True
         return False 
 
-
-    def turno_maquina(tablero_jugador):
-        while True:
-            x = random.randint(0, DIMENSION - 1)
-            y = random.randint(0, DIMENSION - 1)
-
-            if tablero_jugador.tablero_barcos[x][y] == SIMBOLO_TOCADO or tablero_jugador.tablero_barcos[x][y] == SIMBOLO_FALLO:
-                continue
-
-            resultado, barco_afectado = tablero_jugador.disparo_coordenada(x,y)     
-            return resultado, barco_afectado
 
     def solicitar_coordenada(self, elemento_coordenada: str):
         ''' 

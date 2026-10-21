@@ -11,7 +11,7 @@ def iniciar_juego():
             2.- Y con match/case si el número entero está entre 1 y 3
     '''
     while True:
-        print (f"******BIENVENIDO A HUNDIR LA FLOTA******")
+        print (f"******BIENVENIDO A HUNDIR LA FLOTA CLASSIC******")
         try:
             opcion = int(input(f"Elige una opción. 1: Jugar, 2: Mostrar instruciones, 3: salir    "))
         except ValueError:
@@ -46,4 +46,4 @@ def iniciar_juego():
                 return "SALIR"
 
             case _:
-                (f"Opción incorrecta, introduzca un número entero válido (1: Jugar, 2: Mostrar instrucciones o 3: Salir)")
+                print (f"Opción incorrecta, introduzca un número entero válido (1: Jugar, 2: Mostrar instrucciones o 3: Salir)")
